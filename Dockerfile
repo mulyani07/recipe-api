@@ -1,16 +1,17 @@
-# Setup Node
-FROM node:18-alpine as build
+# Base image
+FROM node:18-alpine
 
-# Dependency and Build
+# Set working directory
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 
+# Copy application files
 COPY . .
 
-# Create JS Build
-# RUN npm run build
+# Install dependencies
+RUN npm install
 
+# Expose the port
 EXPOSE 8080
 
-CMD ["node", "server.js"]
+# Start the application
+CMD ["npm", "start"]
