@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'Iyansatya07'; // Ganti dengan secret key Anda
-const firestore = require('../config/firestore'); // Impor firestore
 
 // Middleware untuk memverifikasi token
 const authenticateToken = (req, res, next) => {
@@ -28,17 +27,6 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-
-    // Ambil informasi lebih lanjut tentang pengguna dari Firestore menggunakan ID
-    const userRef = firestore.collection('users').doc(decoded.id.toString());
-    const doc = await userRef.get();
-
-    if (!doc.exists) {
-      return res.status(404).json({ message: 'User not found in Firestore' });
-    }
-
-    // Menambahkan data Firestore pengguna ke req.user
-    req.user.firestoreData = doc.data(); 
 
 
 module.exports = { authenticateToken, isAdmin };
